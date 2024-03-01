@@ -7,7 +7,6 @@ import { CubeTextureLoader, LoadingManager } from 'three';
 
 const gui = new GUI()
 const scene = new THREE.Scene();
-scene.add( new THREE.AxesHelper( 5 ) );
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.set(0, 2, 8);
 
@@ -36,6 +35,22 @@ const cubeTexture = cubeTextureLoader.setPath('/pic2/')
 cubeTexture.mapping = THREE.CubeReflectionMapping;
 scene.background = cubeTexture
 
+const torusGeometry = new THREE.TorusGeometry( 1, 0.5, 16, 100 );
+const normalMat = new THREE.MeshNormalMaterial({envMap: cubeTexture});
+const torusMesh = new THREE.Mesh( torusGeometry, normalMat );
+torusMesh.position.set(0, -5, 0);
+const torusClone = torusMesh.clone();
+torusClone.position.set(0, 5, 0);
+for(let i = 0; i < 100; i++){
+	const torusClone = torusMesh.clone();
+	torusClone.position.x = (Math.random() - 0.5) * 100;
+	torusClone.position.y = (Math.random() - 0.5) * 100;
+	torusClone.position.z = (Math.random() - 0.5) * 100;
+	torusClone.rotation.x = Math.random() * Math.PI;
+	torusClone.rotation.y = Math.random() * Math.PI;
+	scene.add(torusClone);
+}
+
 // 文本几何体属性
 const myProps = {
 	font: null,
@@ -52,6 +67,7 @@ const myProps = {
 }
 
 const material = new THREE.MeshBasicMaterial({ color: myProps.color, envMap: cubeTexture });
+scene.add( torusMesh );
 // 参数更新，重新加载几何体
 function updateGeometry(textGoeMesh){
 	textGoeMesh.geometry.dispose();
