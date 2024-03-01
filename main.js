@@ -2,10 +2,10 @@ import * as THREE from 'three';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import GUI from 'lil-gui'; 
+// import GUI from 'lil-gui'; 
 import { CubeTextureLoader, LoadingManager } from 'three';
 
-const gui = new GUI()
+// const gui = new GUI()
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.set(0, 2, 8);
@@ -82,17 +82,17 @@ function createTextGeo() {
 	textGoeMesh.geometry.center(new THREE.Vector3());
 	scene.add( textGoeMesh );
 	
-	gui.add(myProps, 'size').name('大小').min(0.5).max(10).step(0.5).onChange(() => updateGeometry(textGoeMesh))
-	gui.add(myProps, 'height').name('厚度').min(0.2).max(2).step(0.2).onChange(() => updateGeometry(textGoeMesh))
-	gui.add(myProps, 'bevelThickness').name('倒角厚度').min(0.02).max(2).step(0.02).onChange(() => updateGeometry(textGoeMesh))
-	gui.add(myProps, 'bevelSize').name('倒角放缩').min(0.02).max(2).step(0.02).onChange(() => updateGeometry(textGoeMesh))
-	gui.add(myProps, 'bevelSegments').name('倒角细分').min(0).max(10).step(1).onChange(() => updateGeometry(textGoeMesh))
-	gui.add(material, 'wireframe').name('线框模型')
-	gui.add(myProps, 'dynamicColor').name('动态色彩')
-	// gui.add(myProps, 'words').name('更换语句').onChange(() => updateGeometry(textGoeMesh))
-	gui.addColor(material, 'color').name('颜色').onChange(() => {
-		myProps.dynamicColor = false;
-	})
+	// gui.add(myProps, 'size').name('大小').min(0.5).max(10).step(0.5).onChange(() => updateGeometry(textGoeMesh))
+	// gui.add(myProps, 'height').name('厚度').min(0.2).max(2).step(0.2).onChange(() => updateGeometry(textGoeMesh))
+	// gui.add(myProps, 'bevelThickness').name('倒角厚度').min(0.02).max(2).step(0.02).onChange(() => updateGeometry(textGoeMesh))
+	// gui.add(myProps, 'bevelSize').name('倒角放缩').min(0.02).max(2).step(0.02).onChange(() => updateGeometry(textGoeMesh))
+	// gui.add(myProps, 'bevelSegments').name('倒角细分').min(0).max(10).step(1).onChange(() => updateGeometry(textGoeMesh))
+	// gui.add(material, 'wireframe').name('线框模型')
+	// gui.add(myProps, 'dynamicColor').name('动态色彩')
+	// // gui.add(myProps, 'words').name('更换语句').onChange(() => updateGeometry(textGoeMesh))
+	// gui.addColor(material, 'color').name('颜色').onChange(() => {
+	// 	myProps.dynamicColor = false;
+	// })
 }
 
 //加载字体
@@ -106,30 +106,33 @@ loader.load( 'sans.json', function ( font ) {
 const orbitControls = new OrbitControls( camera, renderer.domElement );
 orbitControls.enableDamping = true;
 orbitControls.dampingFactor = 0.1;
+orbitControls.enablePan = false
+orbitControls.autoRotate = true;
+orbitControls.autoRotateSpeed = 0.8;
 orbitControls.update()
 
 const colorsEnum = [0x3098c5, 0xff3d3d, 0x8457a2, 0xd56c6c, 0x61e5d6, 0x77ee7f, 'skyblue', 0xbec9f4]
-// const wordsEnum = [
-// 	"脑婆亲亲~",
-// 	"爱你一万年",
-// 	"妇女节快乐鸭",
-// 	"想见你想见你",
-// 	"你是我的小宝贝",
-// 	"要想我哦~",
-// 	"春春真可爱^_^",
-// 	"Mua~Mua~",
-// ]
-
 const wordsEnum = [
-	"原神！启动~",
-	"万元申万的",
-	"我真的好喜欢原神啊",
-	"不玩原神只能过一个失败的人生",
-	"我们元神玩家实在是太有实力了",
-	"一键为所有网友安装元神",
-	"原神，嘿嘿<3",
+	"脑婆亲亲~",
+	"爱你一万年",
+	"妇女节快乐鸭",
+	"想见你想见你",
+	"你是我的小宝贝",
+	"要想我哦~",
+	"春春真可爱^_^",
 	"Mua~Mua~",
 ]
+
+// const wordsEnum = [
+// 	"原神！启动~",
+// 	"万元申万的",
+// 	"我真的好喜欢原神啊",
+// 	"不玩原神只能过一个失败的人生",
+// 	"我们元神玩家实在是太有实力了",
+// 	"一键为所有网友安装元神",
+// 	"原神，嘿嘿<3",
+// 	"Mua~Mua~",
+// ]
 //动画函数
 function tick(){
 	renderer.render( scene, camera );
